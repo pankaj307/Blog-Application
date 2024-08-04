@@ -7,8 +7,6 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 @Entity
-//@Getter
-//@Setter
 @Data
 public class Role {
 	

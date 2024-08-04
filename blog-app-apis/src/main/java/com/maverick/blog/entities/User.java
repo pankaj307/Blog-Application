@@ -32,7 +32,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User  implements UserDetails{
+public class User{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -50,14 +50,4 @@ public class User  implements UserDetails{
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles = new HashSet<>();
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<SimpleGrantedAuthority> authorities =  this.roles.stream().map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-		return authorities;
-	}
-
-	@Override
-	public String getUsername() {
-		return this.email;
-	}
 }
