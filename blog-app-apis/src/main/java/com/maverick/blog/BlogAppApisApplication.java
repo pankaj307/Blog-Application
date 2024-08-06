@@ -33,10 +33,11 @@ public class BlogAppApisApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		String password = this.passwordEncoder.encode("1234");
-		System.out.println(password);
+		System.out.println("[Hardcoded-INFO]: encoded value for '1234' is - " + password);
 		User user = this.userRepo.findById(100).orElseThrow(() -> new ResourceNotFoundException("User", "User ID", 100));
 		user.setPassword(password);
 		this.userRepo.save(user);
+		System.out.println("[Hardcoded-INFO]: Updated user with id: 100, to have the access with basic authentication.");
 		
 	}
 
