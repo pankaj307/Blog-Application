@@ -39,6 +39,9 @@ public class BlogAppApisApplication implements CommandLineRunner {
 		this.userRepo.save(user);
 		System.out.println("[Hardcoded-INFO]: Updated user with id: 100, to have the access with basic authentication.");
 		
+		User user2 = this.userRepo.findById(200).orElseThrow(() -> new ResourceNotFoundException("User", "User ID", 100));
+		user2.setPassword(password);
+		this.userRepo.save(user2);
 	}
 
 }
