@@ -11,7 +11,8 @@ import lombok.Data;
 public class Role {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	Below is commented because we will add only few roles in DB with ID defined in AppConstants
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String name;

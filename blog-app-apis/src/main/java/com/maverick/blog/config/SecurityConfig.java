@@ -41,7 +41,7 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable()) // Disable CSRF
 				.authorizeHttpRequests(
 						authorizeRequests -> authorizeRequests
-								.requestMatchers("/api/v1/auth/login", "/h2-console/**") // Allow access to /api/v1/auth/login and /h2-console
+								.requestMatchers("/api/v1/auth/login", "/api/v1/auth/register", "/h2-console/**") // Allow access to /api/v1/auth/login and /h2-console
 								.permitAll()
 								.anyRequest()
 								.authenticated()
