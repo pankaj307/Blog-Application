@@ -2,6 +2,7 @@ package com.maverick.blog.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.maverick.blog.security.CustomUserDetailService;
 import com.maverick.blog.security.JwtAuthenticationEntryPoint;
@@ -22,8 +24,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+	
+	public static final String[] PUBLIC_URLS = {
+			"/api/v1/auth/**",		// allow login and register
+			"/h2-console/**",		// allow h2-console for DB
+			"/v2/api-docs",
+			"/v3/api-docs",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/v3/api-docs/**"
+		};
 
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
@@ -41,8 +55,9 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable()) // Disable CSRF
 				.authorizeHttpRequests(
 						authorizeRequests -> authorizeRequests
-								.requestMatchers("/api/v1/auth/login", "/api/v1/auth/register", "/h2-console/**") // Allow access to /api/v1/auth/login and /h2-console
+								.requestMatchers(PUBLIC_URLS)
 								.permitAll()
+								.requestMatchers(HttpMethod.GET).permitAll()
 								.anyRequest()
 								.authenticated()
 						)
